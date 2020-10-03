@@ -18,11 +18,12 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
 // description of one level
@@ -59,42 +60,48 @@ func (g *game) resetLevel() {
 
 // init level from file
 func (g *game) initLevel(levelName string) {
-	file, error := ioutil.ReadFile(filepath.Join("levels/", levelName))
+	file, error := ebitenutil.OpenFile(filepath.Join("levels/", levelName))
 	if error != nil {
 		log.Panic("Cannot read level ", levelName, ": ", error)
 	}
-	log.Print(string(file))
 
-	lines := strings.Split(string(file), "\n")
+	bytes := make([]byte, 1)
+	n, error := file.Read(bytes)
+	for n == len(bytes) {
+		bytes2 := make([]byte, len(bytes))
+		n, error = file.Read(bytes2)
+		n += len(bytes)
+		bytes = append(bytes, bytes2...)
+	}
+	if n == 0 && error != nil {
+		log.Panic("Cannot read level ", levelName, ": ", error)
+	}
+
+	lines := strings.Split(string(bytes), "\n")
 	if len(lines) < 5 {
 		log.Panic("Cannot read level", levelName, ": not enough lines in file")
 	}
-	log.Print("Num lines: ", len(lines))
 
 	// get width
 	width, error := strconv.Atoi(strings.TrimPrefix(lines[0], "width="))
 	if error != nil {
 		log.Panic("Cannot read level", levelName, ": width is not a correct integer")
 	}
-	log.Print("Width: ", width)
 
 	// get height
 	height, error := strconv.Atoi(strings.TrimPrefix(lines[1], "height="))
 	if error != nil {
 		log.Panic("Cannot read level", levelName, ": height is not a correct integer")
 	}
-	log.Print("Height: ", height)
 
 	// get loop length
 	loopLength, error := strconv.Atoi(strings.TrimPrefix(lines[2], "loop="))
 	if error != nil {
 		log.Panic("Cannot read level", levelName, ": loop is not a correct integer")
 	}
-	log.Print("Loop: ", loopLength)
 
 	// get next level name
 	nextLevel := strings.TrimPrefix(lines[3], "next=")
-	log.Print("Next level: ", nextLevel)
 
 	// get field
 	var startx, starty, goalx, goaly int
@@ -106,7 +113,6 @@ func (g *game) initLevel(levelName string) {
 		if len(lines[line]) < width {
 			log.Panic("Cannot read level", levelName, ": number of characters per line in file does not correspond to level width")
 		}
-		log.Print(lines[line])
 		fieldLine, isStart, isGoal, tmpStartx, tmpGoalx := getLevelLine(lines[line], width)
 		field[line-4] = fieldLine
 		if isStart {

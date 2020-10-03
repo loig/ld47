@@ -26,6 +26,9 @@ import (
 func main() {
 	g := &game{}
 	g.initLevel("testlevel")
+	//g.level = testLevel
+	//g.initPlayer()
+	//g.initLoop()
 
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
 	ebiten.SetWindowTitle("Ludum Dare 47")
