@@ -5,6 +5,8 @@
 *.so
 *.dylib
 ld47
+web
+web/*
 
 # Test binary, built with `go test -c`
 *.test
