@@ -17,22 +17,26 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-import (
-	"log"
+type loop struct {
+	running   bool
+	length    int
+	currentID int
+	moves     []int
+}
 
-	"github.com/hajimehoshi/ebiten"
+const (
+	noMove int = iota
+	right
+	down
+	left
+	up
 )
 
-func main() {
-	g := &game{
-		level:  testLevel,
-		player: player{1, 1},
-		loop:   loop{false, 5, 0, make([]int, 0)},
-	}
-
-	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
-	ebiten.SetWindowTitle("Ludum Dare 47")
-	if err := ebiten.RunGame(g); err != nil {
-		log.Fatal(err)
+func (g *game) addToLoop(move int) {
+	g.loop.moves = append(g.loop.moves, move)
+	g.loop.currentID = len(g.loop.moves)
+	if len(g.loop.moves) >= g.loop.length {
+		g.loop.running = true
+		g.loop.currentID = 0
 	}
 }

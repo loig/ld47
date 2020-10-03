@@ -21,3 +21,19 @@ type player struct {
 	x int
 	y int
 }
+
+func (g *game) movePlayer(move int) {
+	dx, dy := 0, 0
+	switch move {
+	case right:
+		dx, dy = 1, 0
+	case down:
+		dx, dy = 0, 1
+	case left:
+		dx, dy = -1, 0
+	case up:
+		dx, dy = 0, -1
+	}
+	g.player.x += dx
+	g.player.y += dy
+}

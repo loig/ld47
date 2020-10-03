@@ -22,10 +22,3 @@ type game struct {
 	player player
 	loop   loop
 }
-
-type loop struct {
-	running   bool
-	length    int
-	currentID int
-	moves     []int
-}

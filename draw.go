@@ -26,6 +26,7 @@ import (
 
 func (g *game) Draw(screen *ebiten.Image) {
 
+	// display level
 	for y := 0; y < g.level.height; y++ {
 		for x := 0; x < g.level.width; x++ {
 			switch g.level.field[y][x] {
@@ -37,6 +38,25 @@ func (g *game) Draw(screen *ebiten.Image) {
 		}
 	}
 
+	// display player
 	ebitenutil.DrawRect(screen, float64(g.player.x)*10, float64(g.player.y*10), 10, 10, color.RGBA{0, 0, 255, 255})
 
+	// display loop
+	for id := 0; id < g.loop.length; id++ {
+		s := "....."
+		if id < len(g.loop.moves) {
+			switch g.loop.moves[id] {
+			case right:
+				s = "right"
+			case up:
+				s = "up"
+			case left:
+				s = "left"
+			case down:
+				s = "down"
+			}
+		}
+		ebitenutil.DebugPrintAt(screen, s, 150, 10*id+5)
+	}
+	ebitenutil.DebugPrintAt(screen, "->", 135, 10*g.loop.currentID+5)
 }

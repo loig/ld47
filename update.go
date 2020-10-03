@@ -17,8 +17,29 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-import "github.com/hajimehoshi/ebiten"
+import (
+	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/inpututil"
+)
 
 func (g *game) Update(screen *ebiten.Image) error {
+
+	if !g.loop.running {
+		move := noMove
+		if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+			move = right
+		} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
+			move = down
+		} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+			move = left
+		} else if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+			move = up
+		}
+		if move != noMove {
+			g.movePlayer(move)
+			g.addToLoop(move)
+		}
+	}
+
 	return nil
 }
