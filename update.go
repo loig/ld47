@@ -24,6 +24,8 @@ import (
 
 func (g *game) Update(screen *ebiten.Image) error {
 
+	g.frame = (g.frame + 1) % stepDuration
+
 	if !g.loop.running {
 		move := noMove
 		if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
@@ -38,6 +40,10 @@ func (g *game) Update(screen *ebiten.Image) error {
 		if move != noMove {
 			g.movePlayer(move)
 			g.addToLoop(move)
+		}
+	} else {
+		if g.frame == 0 {
+			g.runLoop()
 		}
 	}
 

@@ -21,4 +21,5 @@ type game struct {
 	level  level
 	player player
 	loop   loop
+	frame  int
 }

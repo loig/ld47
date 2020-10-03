@@ -21,3 +21,7 @@ const (
 	screenWidth  = 320
 	screenHeight = 240
 )
+
+var (
+	stepDuration = 10
+)

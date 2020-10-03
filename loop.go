@@ -40,3 +40,8 @@ func (g *game) addToLoop(move int) {
 		g.loop.currentID = 0
 	}
 }
+
+func (g *game) runLoop() {
+	g.movePlayer(g.loop.moves[g.loop.currentID])
+	g.loop.currentID = (g.loop.currentID + 1) % g.loop.length
+}
