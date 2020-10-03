@@ -35,7 +35,7 @@ type level struct {
 	goalx      int
 	goaly      int
 	loopLength int
-	field      [][]int
+	field      [][]tile
 	nextLevel  string
 }
 
@@ -105,7 +105,7 @@ func (g *game) initLevel(levelName string) {
 
 	// get field
 	var startx, starty, goalx, goaly int = 1, 1, width - 2, height - 2
-	field := make([][]int, height)
+	field := make([][]tile, height)
 	if len(lines) < 4+height {
 		log.Panic("Cannot read level", levelName, ": number of lines in file does not correspond to level height")
 	}
@@ -113,7 +113,7 @@ func (g *game) initLevel(levelName string) {
 		if len(lines[line]) < width {
 			log.Panic("Cannot read level", levelName, ": number of characters per line in file does not correspond to level width")
 		}
-		fieldLine, isStart, isGoal, tmpStartx, tmpGoalx := getLevelLine(lines[line], width)
+		fieldLine, isStart, isGoal, tmpStartx, tmpGoalx := getLevelLine(lines[line], width, line-4)
 		field[line-4] = fieldLine
 		if isStart {
 			startx = tmpStartx
@@ -142,21 +142,21 @@ func (g *game) initLevel(levelName string) {
 }
 
 // read a string describing one line of a level
-func getLevelLine(line string, width int) (levelLine []int, isStart, isGoal bool, startx, goalx int) {
-	levelLine = make([]int, width)
+func getLevelLine(line string, width int, lineNum int) (levelLine []tile, isStart, isGoal bool, startx, goalx int) {
+	levelLine = make([]tile, width)
 	for column := 0; column < width; column++ {
-		currentField := nothing
+		currentField := nothingTile
 		switch line[column] {
 		case '#':
-			currentField = wall
+			currentField = wallTile
 		case '.':
-			currentField = floor
+			currentField = getFloorTile(lineNum, column)
 		case 's':
-			currentField = floor
+			currentField = getFloorTile(lineNum, column)
 			isStart = true
 			startx = column
 		case 'g':
-			currentField = floor
+			currentField = getFloorTile(lineNum, column)
 			isGoal = true
 			goalx = column
 		default:

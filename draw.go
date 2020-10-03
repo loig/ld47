@@ -29,15 +29,15 @@ func (g *game) Draw(screen *ebiten.Image) {
 	// display level
 	for y := 0; y < g.level.height; y++ {
 		for x := 0; x < g.level.width; x++ {
-			switch g.level.field[y][x] {
-			case floor:
-				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{0, 255, 0, 255})
-			case wall:
-				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{255, 0, 0, 255})
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(x*tileSize), float64(y*tileSize))
+			screen.DrawImage(g.level.field[y][x].image, op)
+			if x == g.level.goalx && y == g.level.goaly {
+				// display the goal
+				screen.DrawImage(goalImage, op)
 			}
 		}
 	}
-	ebitenutil.DrawRect(screen, float64(g.level.goalx)*10+2, float64(g.level.goaly)*10+2, 6, 6, color.RGBA{128, 128, 128, 255})
 
 	// display player
 	ebitenutil.DrawRect(screen, float64(g.player.x)*10, float64(g.player.y*10), 10, 10, color.RGBA{0, 0, 255, 255})

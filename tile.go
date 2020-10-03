@@ -19,26 +19,16 @@ package main
 
 import "github.com/hajimehoshi/ebiten"
 
-// size of the screen
-const (
-	screenWidth  = 320
-	screenHeight = 240
-)
+// Tile type for defining the field
+type tile struct {
+	kind  int
+	image *ebiten.Image
+}
 
-// duration of a loop step in frames
-var stepDuration = 25
-
-// infos on tiles
-var (
-	tilesImage *ebiten.Image
-	tileSize   = 16
-)
-
-// All types of tiles
-var wallTile = tile{kind: wall}
-var floorTileA = tile{kind: floor}
-var floorTileB = tile{kind: floor}
-var nothingTile = tile{kind: nothing}
-
-// Over the floor objects
-var goalImage *ebiten.Image
+// get a floor tile given some coordinates
+func getFloorTile(a, b int) tile {
+	if (a+b)%2 == 0 {
+		return floorTileA
+	}
+	return floorTileB
+}

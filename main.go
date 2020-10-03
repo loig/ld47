@@ -18,17 +18,31 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 package main
 
 import (
+	"image"
 	"log"
 
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
 
+func init() {
+	img, _, error := ebitenutil.NewImageFromFile("images/tiles.png", ebiten.FilterDefault)
+	if error != nil {
+		log.Panic(error)
+	}
+	tilesImage = img
+
+	wallTile.image = tilesImage.SubImage(image.Rect(0, 0, 16, 24)).(*ebiten.Image)
+	floorTileA.image = tilesImage.SubImage(image.Rect(16, 0, 32, 24)).(*ebiten.Image)
+	floorTileB.image = tilesImage.SubImage(image.Rect(32, 0, 48, 24)).(*ebiten.Image)
+	nothingTile.image = tilesImage.SubImage(image.Rect(0, 0, 16, 16)).(*ebiten.Image)
+
+	goalImage = tilesImage.SubImage(image.Rect(48, 0, 64, 24)).(*ebiten.Image)
+
+}
+
 func main() {
-	g := &game{}
-	g.initLevel("testlevel")
-	//g.level = testLevel
-	//g.initPlayer()
-	//g.initLoop()
+	g := initGame()
 
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
 	ebiten.SetWindowTitle("Ludum Dare 47")

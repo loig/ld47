@@ -47,14 +47,14 @@ func (g *game) movePlayer(move int) {
 		newy < 0 || newy >= g.level.height {
 		return
 	}
-	if g.level.field[newy][newx] == wall {
+	if g.level.field[newy][newx].kind == wall {
 		return
 	}
 	if move == dashRight || move == dashDown ||
 		move == dashLeft || move == dashUp {
 		for newx+dx >= 0 && newx+dx < g.level.width &&
 			newy+dy >= 0 && newy+dy < g.level.height &&
-			g.level.field[newy+dy][newx+dx] != wall {
+			g.level.field[newy+dy][newx+dx].kind != wall {
 			newx += dx
 			newy += dy
 		}

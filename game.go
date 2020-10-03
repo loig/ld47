@@ -31,3 +31,10 @@ const (
 	inLevel int = iota
 	levelWon
 )
+
+// game initialization
+func initGame() *game {
+	g := &game{}
+	g.initLevel("testlevel")
+	return g
+}
