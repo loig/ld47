@@ -19,7 +19,6 @@ package main
 
 import (
 	"image/color"
-	"log"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
@@ -31,13 +30,13 @@ func (g *game) Draw(screen *ebiten.Image) {
 		for x := 0; x < g.level.width; x++ {
 			switch g.level.field[y][x] {
 			case floor:
-				log.Print("displaying floor tile ", x, ", ", y)
-				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{0, 255, 0, 128})
+				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{0, 255, 0, 255})
 			case wall:
-				log.Print("displaying wall tile ", x, ", ", y)
-				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{255, 0, 0, 128})
+				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{255, 0, 0, 255})
 			}
 		}
 	}
+
+	ebitenutil.DrawRect(screen, float64(g.player.x)*10, float64(g.player.y*10), 10, 10, color.RGBA{0, 0, 255, 255})
 
 }

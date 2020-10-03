@@ -17,15 +17,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-type game struct {
-	level  level
-	player player
-	loop   loop
-}
-
-type loop struct {
-	running   bool
-	length    int
-	currentID int
-	moves     []int
+type player struct {
+	x int
+	y int
 }

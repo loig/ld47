@@ -24,7 +24,11 @@ import (
 )
 
 func main() {
-	g := &game{level: testLevel}
+	g := &game{
+		level:  testLevel,
+		player: player{1, 1},
+	}
+
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
 	ebiten.SetWindowTitle("Ludum Dare 47")
 	if err := ebiten.RunGame(g); err != nil {
