@@ -19,13 +19,44 @@ package main
 
 // state of the player
 type player struct {
-	x int
-	y int
+	x            int
+	y            int
+	currentImage int
+	currentFrame int
 }
 
-func (g *game) initPlayer() {
+// reset player animation
+func (g *game) resetPlayerAnimation() {
+	g.player.currentImage = 0
+	g.player.currentFrame = 0
+}
+
+// reset player position and animation
+func (g *game) resetPlayer() {
 	g.player.x = g.level.startx
 	g.player.y = g.level.starty
+	g.resetPlayerAnimation()
+}
+
+// update player animation
+func (g *game) updatePlayerAnimation() {
+	g.player.currentFrame++
+
+	if g.state == inLevel {
+		if g.player.currentFrame >= playerFrames[g.player.currentImage] {
+			g.player.currentFrame = 0
+			g.player.currentImage = (g.player.currentImage + 1) % numPlayerImages
+		}
+	}
+
+	if g.state == levelWon {
+		if g.player.currentImage+1 < numPlayerWinImages {
+			if g.player.currentFrame >= playerWinFrames[g.player.currentImage] {
+				g.player.currentFrame = 0
+				g.player.currentImage = g.player.currentImage + 1
+			}
+		}
+	}
 }
 
 // move the player if possible

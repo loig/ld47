@@ -24,11 +24,12 @@ import (
 
 func (g *game) Update(screen *ebiten.Image) error {
 
-	g.frame = (g.frame + 1) % stepDuration
+	g.updatePlayerAnimation()
 
 	switch g.state {
 
 	case inLevel:
+		g.frame = (g.frame + 1) % stepDuration
 		if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
 			g.resetLevel()
 		}
@@ -65,11 +66,16 @@ func (g *game) Update(screen *ebiten.Image) error {
 			}
 		}
 		if g.levelFinished() {
-			g.state = levelWon
+			g.updateState(levelWon)
+			g.resetPlayerAnimation()
 		}
 
 	case levelWon:
-		g.initLevel(g.level.nextLevel)
+		if g.frame < endLevelDuration {
+			g.frame++
+		} else {
+			g.initLevel(g.level.nextLevel)
+		}
 	}
 
 	return nil

@@ -38,3 +38,9 @@ func initGame() *game {
 	g.initLevel("testlevel")
 	return g
 }
+
+// game state update
+func (g *game) updateState(state int) {
+	g.state = state
+	g.frame = 0
+}

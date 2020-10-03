@@ -39,6 +39,19 @@ func init() {
 
 	goalImage = tilesImage.SubImage(image.Rect(48, 0, 64, 24)).(*ebiten.Image)
 
+	playerImages = make([]*ebiten.Image, numPlayerImages)
+	for pos := 0; pos < numPlayerImages; pos++ {
+		playerImages[pos] = tilesImage.SubImage(image.Rect(pos*16, 24, (pos+1)*16, 48)).(*ebiten.Image)
+	}
+
+	playerWinImages = make([]*ebiten.Image, numPlayerWinImages)
+	for pos := 0; pos < numPlayerImages; pos++ {
+		playerWinImages[pos] = tilesImage.SubImage(image.Rect(pos*16, 24, (pos+1)*16, 48)).(*ebiten.Image)
+	}
+	for pos := numPlayerImages; pos < numPlayerWinImages; pos++ {
+		playerWinImages[pos] = tilesImage.SubImage(image.Rect((pos-numPlayerImages)*16, 48, ((pos-numPlayerImages)+1)*16, 72)).(*ebiten.Image)
+	}
+
 }
 
 func main() {

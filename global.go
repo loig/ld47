@@ -28,6 +28,9 @@ const (
 // duration of a loop step in frames
 var stepDuration = 25
 
+// number of frames between end of level and next level
+var endLevelDuration = 120
+
 // infos on tiles
 var (
 	tilesImage *ebiten.Image
@@ -42,3 +45,14 @@ var nothingTile = tile{kind: nothing}
 
 // Over the floor objects
 var goalImage *ebiten.Image
+
+// infos on player
+const (
+	numPlayerImages    = 2
+	numPlayerWinImages = 6
+)
+
+var playerImages []*ebiten.Image
+var playerFrames []int = []int{40, 10}
+var playerWinImages []*ebiten.Image
+var playerWinFrames []int = []int{10, 10, 10, 10, 10, 10}

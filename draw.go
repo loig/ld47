@@ -18,8 +18,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 package main
 
 import (
-	"image/color"
-
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
 )
@@ -36,11 +34,17 @@ func (g *game) Draw(screen *ebiten.Image) {
 				// display the goal
 				screen.DrawImage(goalImage, op)
 			}
+			if x == g.player.x && y == g.player.y {
+				// display the player
+				switch g.state {
+				case inLevel:
+					screen.DrawImage(playerImages[g.player.currentImage], op)
+				case levelWon:
+					screen.DrawImage(playerWinImages[g.player.currentImage], op)
+				}
+			}
 		}
 	}
-
-	// display player
-	ebitenutil.DrawRect(screen, float64(g.player.x)*10, float64(g.player.y*10), 10, 10, color.RGBA{0, 0, 255, 255})
 
 	// display loop
 	for id := 0; id < g.loop.length; id++ {
