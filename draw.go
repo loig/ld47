@@ -37,6 +37,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 			}
 		}
 	}
+	ebitenutil.DrawRect(screen, float64(g.level.goalx)*10+2, float64(g.level.goaly)*10+2, 6, 6, color.RGBA{128, 128, 128, 255})
 
 	// display player
 	ebitenutil.DrawRect(screen, float64(g.player.x)*10, float64(g.player.y*10), 10, 10, color.RGBA{0, 0, 255, 255})

@@ -26,7 +26,7 @@ import (
 func main() {
 	g := &game{
 		level:  testLevel,
-		player: player{1, 1},
+		player: player{testLevel.startx, testLevel.starty},
 		loop:   loop{false, 5, 0, 0, make([]int, 0)},
 	}
 

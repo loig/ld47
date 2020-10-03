@@ -26,25 +26,34 @@ func (g *game) Update(screen *ebiten.Image) error {
 
 	g.frame = (g.frame + 1) % stepDuration
 
-	if !g.loop.running {
-		move := noMove
-		if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
-			move = right
-		} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
-			move = down
-		} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
-			move = left
-		} else if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
-			move = up
+	switch g.state {
+
+	case inLevel:
+		if !g.loop.running {
+			move := noMove
+			if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
+				move = right
+			} else if inpututil.IsKeyJustPressed(ebiten.KeyDown) {
+				move = down
+			} else if inpututil.IsKeyJustPressed(ebiten.KeyLeft) {
+				move = left
+			} else if inpututil.IsKeyJustPressed(ebiten.KeyUp) {
+				move = up
+			}
+			if move != noMove {
+				g.movePlayer(move)
+				g.addToLoop(move)
+			}
+		} else {
+			if g.frame == 0 {
+				g.runLoop()
+			}
 		}
-		if move != noMove {
-			g.movePlayer(move)
-			g.addToLoop(move)
+		if g.levelFinished() {
+			g.state = levelWon
 		}
-	} else {
-		if g.frame == 0 {
-			g.runLoop()
-		}
+
+	case levelWon:
 	}
 
 	return nil

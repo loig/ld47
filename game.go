@@ -17,9 +17,17 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
+// game structure implementing ebiten interface
 type game struct {
+	state  int
 	level  level
 	player player
 	loop   loop
 	frame  int
 }
+
+// list of possible game states
+const (
+	inLevel int = iota
+	levelWon
+)

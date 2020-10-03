@@ -17,11 +17,13 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
+// state of the player
 type player struct {
 	x int
 	y int
 }
 
+// move the player if possible
 func (g *game) movePlayer(move int) {
 	dx, dy := 0, 0
 	switch move {

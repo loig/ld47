@@ -17,6 +17,7 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
+// state of the move loop
 type loop struct {
 	running       bool
 	length        int
@@ -25,6 +26,7 @@ type loop struct {
 	moves         []int
 }
 
+// possible moves
 const (
 	noMove int = iota
 	right
@@ -33,6 +35,7 @@ const (
 	up
 )
 
+// add a move to the loop and start it if full
 func (g *game) addToLoop(move int) {
 	g.loop.moves = append(g.loop.moves, move)
 	g.loop.nextMoveID = len(g.loop.moves)
@@ -44,6 +47,7 @@ func (g *game) addToLoop(move int) {
 	}
 }
 
+// execute next move in the loop
 func (g *game) runLoop() {
 	g.loop.currentMoveID = g.loop.nextMoveID
 	g.movePlayer(g.loop.moves[g.loop.nextMoveID])
