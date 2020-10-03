@@ -24,12 +24,8 @@ import (
 )
 
 func main() {
-	g := &game{
-		state:  inLevel,
-		level:  testLevel,
-		player: player{testLevel.startx, testLevel.starty},
-	}
-	g.initLoop(g.level.loopLength)
+	g := &game{}
+	g.initLevel("testlevel")
 
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
 	ebiten.SetWindowTitle("Ludum Dare 47")

@@ -36,10 +36,10 @@ const (
 )
 
 // initialize the loop
-func (g *game) initLoop(length int) {
+func (g *game) initLoop() {
 	g.loop = loop{
 		running:       false,
-		length:        length,
+		length:        g.level.loopLength,
 		currentMoveID: 0,
 		nextMoveID:    0,
 		moves:         make([]int, 0),

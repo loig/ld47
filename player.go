@@ -23,6 +23,11 @@ type player struct {
 	y int
 }
 
+func (g *game) initPlayer() {
+	g.player.x = g.level.startx
+	g.player.y = g.level.starty
+}
+
 // move the player if possible
 func (g *game) movePlayer(move int) {
 	dx, dy := 0, 0
