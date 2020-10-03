@@ -76,6 +76,14 @@ func (g *game) Update(screen *ebiten.Image) error {
 		} else {
 			g.initLevel(g.level.nextLevel)
 		}
+
+	case intro:
+		g.frame = (g.frame + 1) % talkFrames
+		if g.frame == 0 {
+			if g.talk.talkState < len(g.talk.dialog) {
+				g.talk.talkState++
+			}
+		}
 	}
 
 	return nil

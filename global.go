@@ -17,7 +17,10 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-import "github.com/hajimehoshi/ebiten"
+import (
+	"github.com/hajimehoshi/ebiten"
+	"golang.org/x/image/font"
+)
 
 // size of the screen
 const (
@@ -84,3 +87,6 @@ var selectedRightUp *ebiten.Image
 var selectedRightDown *ebiten.Image
 
 var menuMoveImages []*ebiten.Image
+
+// font
+var displayFont font.Face

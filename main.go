@@ -21,8 +21,11 @@ import (
 	"image"
 	"log"
 
+	"github.com/golang/freetype/truetype"
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/hajimehoshi/ebiten/examples/resources/fonts"
+	"golang.org/x/image/font"
 )
 
 func init() {
@@ -81,6 +84,18 @@ func init() {
 		var sx, sy int = ((move - 1) % 4) * 16, 192 + ((move-1)/4)*24
 		menuMoveImages[move] = tilesImage.SubImage(image.Rect(sx, sy, sx+16, sy+24)).(*ebiten.Image)
 	}
+
+	// font for dialogs
+	ttfont, err := truetype.Parse(fonts.ArcadeN_ttf)
+	if err != nil {
+		panic(err)
+	}
+	displayFont = truetype.NewFace(ttfont, &truetype.Options{
+		Size:    8,
+		DPI:     72,
+		Hinting: font.HintingFull,
+	})
+
 }
 
 func main() {

@@ -23,6 +23,7 @@ type game struct {
 	level  level
 	player player
 	loop   loop
+	talk   talk
 	frame  int
 }
 
@@ -30,12 +31,15 @@ type game struct {
 const (
 	inLevel int = iota
 	levelWon
+	intro
 )
 
 // game initialization
 func initGame() *game {
 	g := &game{}
-	g.initLevel("testlevel")
+	g.initLevel("level0")
+	g.initTalks()
+	g.updateState(intro)
 	return g
 }
 

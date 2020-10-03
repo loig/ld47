@@ -19,9 +19,11 @@ package main
 
 import (
 	"fmt"
+	"image/color"
 
 	"github.com/hajimehoshi/ebiten"
 	"github.com/hajimehoshi/ebiten/ebitenutil"
+	"github.com/hajimehoshi/ebiten/text"
 )
 
 func (g *game) Draw(screen *ebiten.Image) {
@@ -32,81 +34,120 @@ func (g *game) Draw(screen *ebiten.Image) {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(x*tileSize), float64(y*tileSize+tileyOffset))
 			if (x+y)%2 == 0 {
-				screen.DrawImage(floorTileA.image, op)
-			} else {
 				screen.DrawImage(floorTileB.image, op)
+			} else {
+				screen.DrawImage(floorTileA.image, op)
 			}
 		}
 	}
 
-	// display level
-	levelxOffset := ((tilex - menux) - g.level.width) / 2
-	levelyOffset := (tiley - g.level.height) / 2
-	for y := 0; y < g.level.height; y++ {
-		for x := 0; x < g.level.width; x++ {
-			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64((x+levelxOffset)*tileSize), float64((y+levelyOffset)*tileSize+tileyOffset))
-			screen.DrawImage(g.level.field[y][x].image, op)
-			if x == g.level.goalx && y == g.level.goaly {
-				// display the goal
-				screen.DrawImage(goalImage, op)
-			}
-			if x == g.player.x && y == g.player.y {
-				// display the player
-				switch g.state {
-				case inLevel:
-					screen.DrawImage(playerImages[g.player.currentImage], op)
-				case levelWon:
-					screen.DrawImage(playerWinImages[g.player.currentImage], op)
+	switch g.state {
+	case inLevel, levelWon:
+		// display level
+		levelxOffset := ((tilex - menux) - g.level.width) / 2
+		levelyOffset := (tiley - g.level.height) / 2
+		for y := 0; y < g.level.height; y++ {
+			for x := 0; x < g.level.width; x++ {
+				op := &ebiten.DrawImageOptions{}
+				op.GeoM.Translate(float64((x+levelxOffset)*tileSize), float64((y+levelyOffset)*tileSize+tileyOffset))
+				screen.DrawImage(g.level.field[y][x].image, op)
+				if x == g.level.goalx && y == g.level.goaly {
+					// display the goal
+					screen.DrawImage(goalImage, op)
+				}
+				if x == g.player.x && y == g.player.y {
+					// display the player
+					switch g.state {
+					case inLevel:
+						screen.DrawImage(playerImages[g.player.currentImage], op)
+					case levelWon:
+						screen.DrawImage(playerWinImages[g.player.currentImage], op)
+					}
 				}
 			}
 		}
-	}
 
-	// display loop
-	for id := 0; id < g.loop.length; id++ {
-		op := &ebiten.DrawImageOptions{}
-		op.GeoM.Translate(float64(screenWidth-menux*tileSize+tileSize/2), float64(2*id*tileSize))
-		if id < len(g.loop.moves) {
-			screen.DrawImage(menuLeftPartsUp[id], op)
-		} else {
-			screen.DrawImage(menuEmptySpot, op)
-		}
-		if id == g.loop.currentMoveID {
-			screen.DrawImage(selectedLeftUp, op)
-		}
-		op.GeoM.Translate(0, 16)
-		screen.DrawImage(menuLeftPartDown, op)
-		if id == g.loop.currentMoveID {
-			screen.DrawImage(selectedLeftDown, op)
-		}
-		op.GeoM.Translate(16, 0)
-		screen.DrawImage(menuCenterPartDown, op)
-		if id == g.loop.currentMoveID {
-			screen.DrawImage(selectedCenterDown, op)
-		}
-		op.GeoM.Translate(0, -16)
-		screen.DrawImage(menuCenterPartUp, op)
-		if id == g.loop.currentMoveID {
-			screen.DrawImage(selectedCenterUp, op)
-		}
-		op.GeoM.Translate(16, 0)
-		screen.DrawImage(menuRightPartUp, op)
-		if id == g.loop.currentMoveID {
-			screen.DrawImage(selectedRightUp, op)
-		}
-		op.GeoM.Translate(0, 16)
-		screen.DrawImage(menuRightPartDown, op)
-		if id == g.loop.currentMoveID {
-			screen.DrawImage(selectedRightDown, op)
-		}
-
-		if id < len(g.loop.moves) {
+		// display loop
+		for id := 0; id < g.loop.length; id++ {
 			op := &ebiten.DrawImageOptions{}
-			op.GeoM.Translate(float64(screenWidth-menux*tileSize+tileSize*2), float64(2*id*tileSize+tileSize/2))
-			screen.DrawImage(menuMoveImages[g.loop.moves[id]], op)
+			op.GeoM.Translate(float64(screenWidth-menux*tileSize+tileSize/2), float64(2*id*tileSize))
+			if id < len(g.loop.moves) {
+				screen.DrawImage(menuLeftPartsUp[id], op)
+			} else {
+				screen.DrawImage(menuEmptySpot, op)
+			}
+			if id == g.loop.currentMoveID {
+				screen.DrawImage(selectedLeftUp, op)
+			}
+			op.GeoM.Translate(0, 16)
+			screen.DrawImage(menuLeftPartDown, op)
+			if id == g.loop.currentMoveID {
+				screen.DrawImage(selectedLeftDown, op)
+			}
+			op.GeoM.Translate(16, 0)
+			screen.DrawImage(menuCenterPartDown, op)
+			if id == g.loop.currentMoveID {
+				screen.DrawImage(selectedCenterDown, op)
+			}
+			op.GeoM.Translate(0, -16)
+			screen.DrawImage(menuCenterPartUp, op)
+			if id == g.loop.currentMoveID {
+				screen.DrawImage(selectedCenterUp, op)
+			}
+			op.GeoM.Translate(16, 0)
+			screen.DrawImage(menuRightPartUp, op)
+			if id == g.loop.currentMoveID {
+				screen.DrawImage(selectedRightUp, op)
+			}
+			op.GeoM.Translate(0, 16)
+			screen.DrawImage(menuRightPartDown, op)
+			if id == g.loop.currentMoveID {
+				screen.DrawImage(selectedRightDown, op)
+			}
+
+			if id < len(g.loop.moves) {
+				op := &ebiten.DrawImageOptions{}
+				op.GeoM.Translate(float64(screenWidth-menux*tileSize+tileSize*2), float64(2*id*tileSize+tileSize/2))
+				screen.DrawImage(menuMoveImages[g.loop.moves[id]], op)
+			}
+		}
+
+	case intro:
+		textyPos := 16
+		dy := tileSize/2 - 2
+		dx := tileSize - 3
+		xloop := 22
+		for pos := 0; pos < g.talk.talkState; pos++ {
+			boxxPos := 6
+			textxPos := boxxPos + 8
+			if g.talk.dialog[pos].speaker == &speaker2 {
+				boxxPos = 88
+				textxPos = boxxPos + 8
+			}
+			op := &ebiten.DrawImageOptions{}
+			op.GeoM.Translate(float64(boxxPos), float64(textyPos-tileSize*3/2))
+			for j := 0; j < len(g.talk.dialog[pos].text)+1; j++ {
+				for i := 0; i < xloop; i++ {
+					screen.DrawImage(menuEmptySpot, op)
+					op.GeoM.Translate(0, float64(dy))
+					screen.DrawImage(menuEmptySpot, op)
+					op.GeoM.Translate(float64(dx), float64(-dy))
+				}
+				op.GeoM.Translate(float64(-xloop*dx), 1.6*float64(dy))
+			}
+
+			speaker := *(g.talk.dialog[pos].speaker) + ":"
+			text.Draw(screen, speaker, displayFont, textxPos, textyPos, color.RGBA{249, 65, 9, 255})
+			textyPos += 10
+			for _, line := range g.talk.dialog[pos].text {
+				text.Draw(screen, line, displayFont, textxPos, textyPos, color.RGBA{169, 49, 13, 255})
+				textyPos += 10
+			}
+
+			textyPos += 14
 		}
 	}
 
+	// debug
 	ebitenutil.DebugPrint(screen, fmt.Sprint(ebiten.CurrentTPS(), ", ", ebiten.CurrentFPS()))
 }
