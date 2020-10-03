@@ -44,6 +44,18 @@ func (g *game) Update(screen *ebiten.Image) error {
 				move = up
 			}
 			if move != noMove {
+				if ebiten.IsKeyPressed(ebiten.KeySpace) {
+					switch move {
+					case right:
+						move = dashRight
+					case down:
+						move = dashDown
+					case left:
+						move = dashLeft
+					case up:
+						move = dashUp
+					}
+				}
 				g.movePlayer(move)
 				g.addToLoop(move)
 			}

@@ -65,16 +65,16 @@ func (g *game) initLevel(levelName string) {
 		log.Panic("Cannot read level ", levelName, ": ", error)
 	}
 
-	bytes := make([]byte, 1)
+	bytes := make([]byte, 1) // maybe make this size larger
 	n, error := file.Read(bytes)
-	for n == len(bytes) {
-		bytes2 := make([]byte, len(bytes))
-		n, error = file.Read(bytes2)
-		n += len(bytes)
-		bytes = append(bytes, bytes2...)
-	}
 	if n == 0 && error != nil {
 		log.Panic("Cannot read level ", levelName, ": ", error)
+	}
+	for n == len(bytes) {
+		bytes2 := make([]byte, len(bytes))
+		n, _ = file.Read(bytes2)
+		n += len(bytes)
+		bytes = append(bytes, bytes2...)
 	}
 
 	lines := strings.Split(string(bytes), "\n")
@@ -104,7 +104,7 @@ func (g *game) initLevel(levelName string) {
 	nextLevel := strings.TrimPrefix(lines[3], "next=")
 
 	// get field
-	var startx, starty, goalx, goaly int
+	var startx, starty, goalx, goaly int = 1, 1, width - 2, height - 2
 	field := make([][]int, height)
 	if len(lines) < 4+height {
 		log.Panic("Cannot read level", levelName, ": number of lines in file does not correspond to level height")

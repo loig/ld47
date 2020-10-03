@@ -55,6 +55,14 @@ func (g *game) Draw(screen *ebiten.Image) {
 				s = "left"
 			case down:
 				s = "down"
+			case dashRight:
+				s = "dright"
+			case dashUp:
+				s = "dup"
+			case dashLeft:
+				s = "dleft"
+			case dashDown:
+				s = "ddown"
 			}
 		}
 		ebitenutil.DebugPrintAt(screen, s, 150, 10*id+5)

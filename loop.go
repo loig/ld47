@@ -33,6 +33,10 @@ const (
 	down
 	left
 	up
+	dashRight
+	dashDown
+	dashLeft
+	dashUp
 )
 
 // initialize the loop

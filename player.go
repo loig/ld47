@@ -32,13 +32,13 @@ func (g *game) initPlayer() {
 func (g *game) movePlayer(move int) {
 	dx, dy := 0, 0
 	switch move {
-	case right:
+	case right, dashRight:
 		dx, dy = 1, 0
-	case down:
+	case down, dashDown:
 		dx, dy = 0, 1
-	case left:
+	case left, dashLeft:
 		dx, dy = -1, 0
-	case up:
+	case up, dashUp:
 		dx, dy = 0, -1
 	}
 	newx := g.player.x + dx
@@ -49,6 +49,15 @@ func (g *game) movePlayer(move int) {
 	}
 	if g.level.field[newy][newx] == wall {
 		return
+	}
+	if move == dashRight || move == dashDown ||
+		move == dashLeft || move == dashUp {
+		for newx+dx >= 0 && newx+dx < g.level.width &&
+			newy+dy >= 0 && newy+dy < g.level.height &&
+			g.level.field[newy+dy][newx+dx] != wall {
+			newx += dx
+			newy += dy
+		}
 	}
 	g.player.x = newx
 	g.player.y = newy
