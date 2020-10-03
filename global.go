@@ -21,8 +21,12 @@ import "github.com/hajimehoshi/ebiten"
 
 // size of the screen
 const (
-	screenWidth  = 320
-	screenHeight = 240
+	screenWidth  = 384
+	screenHeight = 272
+	tilex        = 24
+	menux        = 4
+	tiley        = 17
+	tileyOffset  = -8
 )
 
 // duration of a loop step in frames
@@ -56,3 +60,27 @@ var playerImages []*ebiten.Image
 var playerFrames []int = []int{40, 10}
 var playerWinImages []*ebiten.Image
 var playerWinFrames []int = []int{10, 10, 10, 10, 10, 10}
+
+// menu
+const (
+	maxLoopLength = 8
+)
+
+var menuLeftPartsUp []*ebiten.Image
+var menuLeftPartDown *ebiten.Image
+var menuRightPartUp *ebiten.Image
+var menuRightPartDown *ebiten.Image
+var menuCenterPartUp *ebiten.Image
+var menuCenterPartDown *ebiten.Image
+var menuNotification *ebiten.Image
+var menuMoveInfos []*ebiten.Image
+var menuEmptySpot *ebiten.Image
+
+var selectedLeftUp *ebiten.Image
+var selectedLeftDown *ebiten.Image
+var selectedCenterUp *ebiten.Image
+var selectedCenterDown *ebiten.Image
+var selectedRightUp *ebiten.Image
+var selectedRightDown *ebiten.Image
+
+var menuMoveImages []*ebiten.Image
