@@ -17,8 +17,27 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-import "github.com/hajimehoshi/ebiten"
+import (
+	"image/color"
+	"log"
+
+	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/ebitenutil"
+)
 
 func (g *game) Draw(screen *ebiten.Image) {
+
+	for y := 0; y < g.level.height; y++ {
+		for x := 0; x < g.level.width; x++ {
+			switch g.level.field[y][x] {
+			case floor:
+				log.Print("displaying floor tile ", x, ", ", y)
+				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{0, 255, 0, 128})
+			case wall:
+				log.Print("displaying wall tile ", x, ", ", y)
+				ebitenutil.DrawRect(screen, float64(x)*10, float64(y)*10, 10, 10, color.RGBA{255, 0, 0, 128})
+			}
+		}
+	}
 
 }

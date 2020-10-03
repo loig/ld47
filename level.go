@@ -17,20 +17,31 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-type game struct {
-	level  level
-	player player
-	loop   loop
+type level struct {
+	width  int
+	height int
+	startx int
+	starty int
+	goalx  int
+	goaly  int
+	field  [][]int
 }
 
-type player struct {
-	x int
-	y int
-}
+// field tile types
+const (
+	floor int = iota
+	wall
+	nothing
+)
 
-type loop struct {
-	running   bool
-	length    int
-	currentID int
-	moves     []int
+// test level
+var testLevel = level{
+	width:  6,
+	height: 4,
+	field: [][]int{
+		[]int{wall, wall, wall, wall, wall, wall},
+		[]int{wall, floor, floor, floor, wall, wall},
+		[]int{wall, floor, floor, floor, floor, wall},
+		[]int{wall, wall, wall, wall, wall, wall},
+	},
 }
