@@ -18,10 +18,11 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 package main
 
 type loop struct {
-	running   bool
-	length    int
-	currentID int
-	moves     []int
+	running       bool
+	length        int
+	currentMoveID int
+	nextMoveID    int
+	moves         []int
 }
 
 const (
@@ -34,14 +35,17 @@ const (
 
 func (g *game) addToLoop(move int) {
 	g.loop.moves = append(g.loop.moves, move)
-	g.loop.currentID = len(g.loop.moves)
+	g.loop.nextMoveID = len(g.loop.moves)
+	g.loop.currentMoveID = g.loop.nextMoveID
 	if len(g.loop.moves) >= g.loop.length {
 		g.loop.running = true
-		g.loop.currentID = 0
+		g.loop.currentMoveID = len(g.loop.moves) - 1
+		g.loop.nextMoveID = 0
 	}
 }
 
 func (g *game) runLoop() {
-	g.movePlayer(g.loop.moves[g.loop.currentID])
-	g.loop.currentID = (g.loop.currentID + 1) % g.loop.length
+	g.loop.currentMoveID = g.loop.nextMoveID
+	g.movePlayer(g.loop.moves[g.loop.nextMoveID])
+	g.loop.nextMoveID = (g.loop.nextMoveID + 1) % g.loop.length
 }

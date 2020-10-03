@@ -34,6 +34,15 @@ func (g *game) movePlayer(move int) {
 	case up:
 		dx, dy = 0, -1
 	}
-	g.player.x += dx
-	g.player.y += dy
+	newx := g.player.x + dx
+	newy := g.player.y + dy
+	if newx < 0 || newx >= g.level.width ||
+		newy < 0 || newy >= g.level.height {
+		return
+	}
+	if g.level.field[newy][newx] == wall {
+		return
+	}
+	g.player.x = newx
+	g.player.y = newy
 }

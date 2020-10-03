@@ -23,5 +23,5 @@ const (
 )
 
 var (
-	stepDuration = 10
+	stepDuration = 25
 )

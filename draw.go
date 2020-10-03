@@ -58,5 +58,5 @@ func (g *game) Draw(screen *ebiten.Image) {
 		}
 		ebitenutil.DebugPrintAt(screen, s, 150, 10*id+5)
 	}
-	ebitenutil.DebugPrintAt(screen, "->", 135, 10*g.loop.currentID+5)
+	ebitenutil.DebugPrintAt(screen, "->", 135, 10*g.loop.currentMoveID+5)
 }

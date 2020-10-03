@@ -27,7 +27,7 @@ func main() {
 	g := &game{
 		level:  testLevel,
 		player: player{1, 1},
-		loop:   loop{false, 5, 0, make([]int, 0)},
+		loop:   loop{false, 5, 0, 0, make([]int, 0)},
 	}
 
 	ebiten.SetWindowSize(screenWidth*2, screenHeight*2)
