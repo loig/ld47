@@ -57,6 +57,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 		}
 
 	case levelWon:
+		g.initLevel(g.level.nextLevel)
 	}
 
 	return nil

@@ -130,6 +130,7 @@ func (g *game) initLevel(levelName string) {
 		field:      field,
 		nextLevel:  nextLevel,
 	}
+	g.state = inLevel
 	g.initPlayer()
 	g.initLoop()
 }
