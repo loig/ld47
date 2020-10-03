@@ -17,16 +17,24 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-import "strconv"
+import (
+	"log"
+	"strconv"
+)
 
 var speaker1 = "???"
-var cubNum = 7
-var speaker2BaseName = "C.U.B-"
-var speaker2 = speaker2BaseName + strconv.Itoa(cubNum)
+
+const initCubNum = 3
+
+var cubNum = initCubNum
+
+const speaker2BaseName = "C.U.B-"
+
+var speaker2 string
 
 var talks = [][]sentence{
 	[]sentence{
-		sentence{&speaker1, []string{"Welcome to life C.U.B-" + strconv.Itoa(cubNum) + "!"}},
+		sentence{&speaker1, nil},
 		sentence{&speaker2, []string{"..."}},
 		sentence{&speaker1, []string{"You are a freshly generated Cyber-", "netic Unit Benchmark. Hopefully you", "will perform better than your pre-", "decessors."}},
 		sentence{&speaker2, []string{"..."}},
@@ -61,15 +69,22 @@ type sentence struct {
 
 // init the talks
 func (g *game) initTalks() {
+	if cubNum != initCubNum {
+		speaker1 = speaker2
+	}
+	speaker2 = speaker2BaseName + strconv.Itoa(cubNum)
+	talks[0][0].text = []string{"Welcome to life C.U.B-" + strconv.Itoa(cubNum) + "!"}
 	g.talk = talk{
 		dialog:    talks[0],
 		talkState: 1,
 		nextTalk:  1,
 	}
+	cubNum++
 }
 
 // go to next talk
 func (g *game) updateTalks() {
+	log.Print("updateTalks: ", g.talk.nextTalk)
 	nextTalk := g.talk.nextTalk
 	g.talk = talk{
 		dialog:    talks[nextTalk],

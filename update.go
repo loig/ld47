@@ -81,13 +81,28 @@ func (g *game) Update(screen *ebiten.Image) error {
 		}
 
 	case levelWon:
+		changeLevel := false
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
-			g.initLevel(g.level.nextLevel)
-		}
-		if g.frame < endLevelDuration {
-			g.frame++
+			changeLevel = true
 		} else {
+			if g.frame < endLevelDuration {
+				g.frame++
+			} else {
+				changeLevel = true
+			}
+		}
+		if changeLevel {
+			newLoop := false
+			if g.level.nextLevel == "done" {
+				g.level.nextLevel = "level0"
+				g.level.number = 0
+				newLoop = true
+			}
 			g.initLevel(g.level.nextLevel)
+			if newLoop {
+				g.initTalks()
+				g.updateState(intro)
+			}
 		}
 
 	case intro:
