@@ -19,13 +19,14 @@ package main
 
 // description of one level
 type level struct {
-	width  int
-	height int
-	startx int
-	starty int
-	goalx  int
-	goaly  int
-	field  [][]int
+	width      int
+	height     int
+	startx     int
+	starty     int
+	goalx      int
+	goaly      int
+	loopLength int
+	field      [][]int
 }
 
 // field tile types
@@ -40,14 +41,22 @@ func (g *game) levelFinished() bool {
 	return g.player.x == g.level.goalx && g.player.y == g.level.goaly
 }
 
+// reset level
+func (g *game) resetLevel() {
+	g.player.x = g.level.startx
+	g.player.y = g.level.starty
+	g.initLoop(g.level.loopLength)
+}
+
 // test level
 var testLevel = level{
-	width:  6,
-	height: 4,
-	startx: 1,
-	starty: 1,
-	goalx:  4,
-	goaly:  2,
+	width:      6,
+	height:     4,
+	startx:     1,
+	starty:     1,
+	goalx:      4,
+	goaly:      2,
+	loopLength: 5,
 	field: [][]int{
 		[]int{wall, wall, wall, wall, wall, wall},
 		[]int{wall, floor, floor, floor, wall, wall},

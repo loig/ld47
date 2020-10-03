@@ -35,6 +35,17 @@ const (
 	up
 )
 
+// initialize the loop
+func (g *game) initLoop(length int) {
+	g.loop = loop{
+		running:       false,
+		length:        length,
+		currentMoveID: 0,
+		nextMoveID:    0,
+		moves:         make([]int, 0),
+	}
+}
+
 // add a move to the loop and start it if full
 func (g *game) addToLoop(move int) {
 	g.loop.moves = append(g.loop.moves, move)

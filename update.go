@@ -29,6 +29,9 @@ func (g *game) Update(screen *ebiten.Image) error {
 	switch g.state {
 
 	case inLevel:
+		if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
+			g.resetLevel()
+		}
 		if !g.loop.running {
 			move := noMove
 			if inpututil.IsKeyJustPressed(ebiten.KeyRight) {
