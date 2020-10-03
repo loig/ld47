@@ -37,6 +37,7 @@ type level struct {
 	loopLength int
 	field      [][]tile
 	nextLevel  string
+	number     int
 }
 
 // field tile types
@@ -113,7 +114,7 @@ func (g *game) initLevel(levelName string) {
 		if len(lines[line]) < width {
 			log.Panic("Cannot read level", levelName, ": number of characters per line in file does not correspond to level width")
 		}
-		fieldLine, isStart, isGoal, tmpStartx, tmpGoalx := getLevelLine(lines[line], width, line-4)
+		fieldLine, isStart, isGoal, tmpStartx, tmpGoalx := getLevelLine(lines[line], width, height, line-4)
 		field[line-4] = fieldLine
 		if isStart {
 			startx = tmpStartx
@@ -125,6 +126,7 @@ func (g *game) initLevel(levelName string) {
 		}
 	}
 
+	levelNum := g.level.number + 1
 	g.level = level{
 		width:      width,
 		height:     height,
@@ -135,6 +137,7 @@ func (g *game) initLevel(levelName string) {
 		loopLength: loopLength,
 		field:      field,
 		nextLevel:  nextLevel,
+		number:     levelNum,
 	}
 	g.updateState(inLevel)
 	g.resetPlayer()
@@ -142,21 +145,23 @@ func (g *game) initLevel(levelName string) {
 }
 
 // read a string describing one line of a level
-func getLevelLine(line string, width int, lineNum int) (levelLine []tile, isStart, isGoal bool, startx, goalx int) {
+func getLevelLine(line string, width, height int, lineNum int) (levelLine []tile, isStart, isGoal bool, startx, goalx int) {
 	levelLine = make([]tile, width)
+	colOffset := ((tilex - menux) - width) / 2
+	lineOffset := (tiley - height) / 2
 	for column := 0; column < width; column++ {
 		currentField := nothingTile
 		switch line[column] {
 		case '#':
 			currentField = wallTile
 		case '.':
-			currentField = getFloorTile(lineNum, column)
+			currentField = getFloorTile(lineNum+lineOffset, column+colOffset)
 		case 's':
-			currentField = getFloorTile(lineNum, column)
+			currentField = getFloorTile(lineNum+lineOffset, column+colOffset)
 			isStart = true
 			startx = column
 		case 'g':
-			currentField = getFloorTile(lineNum, column)
+			currentField = getFloorTile(lineNum+lineOffset, column+colOffset)
 			isGoal = true
 			goalx = column
 		default:

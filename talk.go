@@ -26,23 +26,24 @@ var speaker2 = speaker2BaseName + strconv.Itoa(cubNum)
 
 var talks = [][]sentence{
 	[]sentence{
-		sentence{&speaker1, []string{"Welcome to life C.U.B-" + strconv.Itoa(cubNum)}},
+		sentence{&speaker1, []string{"Welcome to life C.U.B-" + strconv.Itoa(cubNum) + "!"}},
 		sentence{&speaker2, []string{"..."}},
-		sentence{&speaker1, []string{"You are a freshly generated Cyber-", "netic Unit Benchmark. Hopefully you", "will perform better than your pre-", "decessors"}},
+		sentence{&speaker1, []string{"You are a freshly generated Cyber-", "netic Unit Benchmark. Hopefully you", "will perform better than your pre-", "decessors."}},
 		sentence{&speaker2, []string{"..."}},
-		sentence{&speaker1, []string{"You do not look very loquacious"}},
+		sentence{&speaker1, []string{"You do not look very loquacious."}},
 		sentence{&speaker2, []string{"..."}},
-		sentence{&speaker1, []string{"Well, I guess we will start then"}},
+		sentence{&speaker1, []string{"I guess we go on then. Press enter."}},
 	},
 	[]sentence{
-		sentence{&speaker1, []string{"Just use arrow keys to move"}},
+		sentence{&speaker1, []string{"Just use the arrow keys to move and", "reach the orange circled tile.", "You can use backspace to restart.", "Press enter when you are ready."}},
 	},
 	[]sentence{
-		sentence{&speaker1, []string{"Oh... did I forgot to mention that you have a move limit after wich you will loop forever?"}},
+		sentence{&speaker1, []string{"Oups! Did I forgot to mention that", "you have a move limit after wich", "you will loop forever? Well, sorry.", "Now press enter and enjoy looping."}},
 	},
 	[]sentence{
-		sentence{&speaker1, []string{"You can use space combined with some arrow key to dash"}},
+		sentence{&speaker1, []string{"You can use space combined with", "some arrow key to dash.", "Press enter when you are ready."}},
 	},
+	[]sentence{},
 }
 
 // type for describing talk
@@ -64,6 +65,16 @@ func (g *game) initTalks() {
 		dialog:    talks[0],
 		talkState: 1,
 		nextTalk:  1,
+	}
+}
+
+// go to next talk
+func (g *game) updateTalks() {
+	nextTalk := g.talk.nextTalk
+	g.talk = talk{
+		dialog:    talks[nextTalk],
+		talkState: 1,
+		nextTalk:  (nextTalk + 1) % len(talks),
 	}
 }
 

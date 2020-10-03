@@ -34,15 +34,14 @@ func (g *game) Draw(screen *ebiten.Image) {
 			op := &ebiten.DrawImageOptions{}
 			op.GeoM.Translate(float64(x*tileSize), float64(y*tileSize+tileyOffset))
 			if (x+y)%2 == 0 {
-				screen.DrawImage(floorTileB.image, op)
+				screen.DrawImage(getFloorTile(y, x).image, op)
 			} else {
-				screen.DrawImage(floorTileA.image, op)
+				screen.DrawImage(getFloorTile(y, x).image, op)
 			}
 		}
 	}
 
-	switch g.state {
-	case inLevel, levelWon:
+	if g.state == inLevel || g.state == levelWon {
 		// display level
 		levelxOffset := ((tilex - menux) - g.level.width) / 2
 		levelyOffset := (tiley - g.level.height) / 2
@@ -111,8 +110,12 @@ func (g *game) Draw(screen *ebiten.Image) {
 				screen.DrawImage(menuMoveImages[g.loop.moves[id]], op)
 			}
 		}
+	}
 
-	case intro:
+	if g.state == intro ||
+		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 2) ||
+		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 3 && g.loop.running) ||
+		(g.state == inLevel && g.level.number == 2 && g.talk.nextTalk == 4) {
 		textyPos := 16
 		dy := tileSize/2 - 2
 		dx := tileSize - 3
