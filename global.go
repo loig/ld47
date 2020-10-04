@@ -50,7 +50,7 @@ const (
 
 // in level info
 const (
-	totalNumLevel  = 10
+	totalNumLevel  = 20
 	levelInfoText1 = "Benchmark: " + speaker2BaseName
 	levelInfoText2 = " - Progress: "
 )
