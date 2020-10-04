@@ -17,7 +17,9 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 */
 package main
 
-import "github.com/hajimehoshi/ebiten"
+import (
+	"github.com/hajimehoshi/ebiten"
+)
 
 // Tile type for defining the field
 type tile struct {
@@ -31,4 +33,12 @@ func getFloorTile(a, b int) tile {
 		return floorTileA
 	}
 	return floorTileB
+}
+
+// get a box tile given some coordinates
+func getBoxTile(a, b int) tile {
+	if (a+b)%2 == 0 {
+		return boxTileA
+	}
+	return boxTileB
 }

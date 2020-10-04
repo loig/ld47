@@ -65,6 +65,8 @@ var (
 var wallTile = tile{kind: wall}
 var floorTileA = tile{kind: floor}
 var floorTileB = tile{kind: floor}
+var boxTileA = tile{kind: box}
+var boxTileB = tile{kind: box}
 var nothingTile = tile{kind: nothing}
 
 // Over the floor objects

@@ -28,22 +28,24 @@ import (
 
 // description of one level
 type level struct {
-	width      int
-	height     int
-	startx     int
-	starty     int
-	goalx      int
-	goaly      int
-	loopLength int
-	field      [][]tile
-	nextLevel  string
-	number     int
+	width         int
+	height        int
+	startx        int
+	starty        int
+	goalx         int
+	goaly         int
+	loopLength    int
+	field         [][]tile
+	originalfield [][]tile
+	nextLevel     string
+	number        int
 }
 
 // field tile types
 const (
 	floor int = iota
 	wall
+	box
 	nothing
 )
 
@@ -56,7 +58,20 @@ func (g *game) levelFinished() bool {
 func (g *game) resetLevel() {
 	g.player.x = g.level.startx
 	g.player.y = g.level.starty
+	g.copyField()
 	g.initLoop()
+}
+
+// copy a field in a new array
+func (g *game) copyField() {
+	f := make([][]tile, g.level.height)
+	for y := 0; y < g.level.height; y++ {
+		f[y] = make([]tile, g.level.width)
+		for x := 0; x < g.level.width; x++ {
+			f[y][x] = g.level.originalfield[y][x]
+		}
+	}
+	g.level.field = f
 }
 
 // init level from file
@@ -128,17 +143,18 @@ func (g *game) initLevel(levelName string) {
 
 	levelNum := g.level.number + 1
 	g.level = level{
-		width:      width,
-		height:     height,
-		startx:     startx,
-		starty:     starty,
-		goalx:      goalx,
-		goaly:      goaly,
-		loopLength: loopLength,
-		field:      field,
-		nextLevel:  nextLevel,
-		number:     levelNum,
+		width:         width,
+		height:        height,
+		startx:        startx,
+		starty:        starty,
+		goalx:         goalx,
+		goaly:         goaly,
+		loopLength:    loopLength,
+		originalfield: field,
+		nextLevel:     nextLevel,
+		number:        levelNum,
 	}
+	g.copyField()
 	g.updateState(inLevel)
 	g.resetPlayer()
 	g.initLoop()
@@ -164,6 +180,8 @@ func getLevelLine(line string, width, height int, lineNum int) (levelLine []tile
 			currentField = getFloorTile(lineNum+lineOffset, column+colOffset)
 			isGoal = true
 			goalx = column
+		case 'b':
+			currentField = getBoxTile(lineNum+lineOffset, column+colOffset)
 		default:
 			log.Panic("Cannot read level: unrecognized character in field description: ", line[column])
 		}

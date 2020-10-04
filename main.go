@@ -46,6 +46,8 @@ func init() {
 	floorTileA.image = tilesImage.SubImage(image.Rect(16, 0, 32, 24)).(*ebiten.Image)
 	floorTileB.image = tilesImage.SubImage(image.Rect(32, 0, 48, 24)).(*ebiten.Image)
 	nothingTile.image = tilesImage.SubImage(image.Rect(0, 0, 16, 16)).(*ebiten.Image)
+	boxTileA.image = tilesImage.SubImage(image.Rect(32, 24, 48, 48)).(*ebiten.Image)
+	boxTileB.image = tilesImage.SubImage(image.Rect(48, 24, 64, 48)).(*ebiten.Image)
 
 	// init goal image
 	goalImage = tilesImage.SubImage(image.Rect(48, 0, 64, 24)).(*ebiten.Image)
