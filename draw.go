@@ -22,7 +22,6 @@ import (
 	"image/color"
 
 	"github.com/hajimehoshi/ebiten"
-	"github.com/hajimehoshi/ebiten/ebitenutil"
 	"github.com/hajimehoshi/ebiten/text"
 )
 
@@ -119,7 +118,11 @@ func (g *game) Draw(screen *ebiten.Image) {
 			s = fmt.Sprint(s, g.level.number)
 		}
 		s = fmt.Sprint(s, "/", totalNumLevel)
-		text.Draw(screen, s, displayFont, 7, 268, color.RGBA{45, 47, 74, 255})
+		text.Draw(screen, s, displayFont, 9, 268, color.RGBA{45, 47, 74, 255})
+
+		if g.state == inLevel {
+			text.Draw(screen, "Backslash to restart level", displayFont, 9, 10, color.RGBA{45, 47, 74, 255})
+		}
 	}
 
 	if g.state == intro || g.state == gameWon ||
@@ -169,5 +172,5 @@ func (g *game) Draw(screen *ebiten.Image) {
 	}
 
 	// debug
-	ebitenutil.DebugPrint(screen, fmt.Sprint(ebiten.CurrentTPS(), ", ", ebiten.CurrentFPS()))
+	//ebitenutil.DebugPrint(screen, fmt.Sprint(ebiten.CurrentTPS(), ", ", ebiten.CurrentFPS()))
 }
