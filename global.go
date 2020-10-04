@@ -47,6 +47,13 @@ const (
 	infoText     = "Press enter"
 )
 
+// in level info
+const (
+	totalNumLevel  = 10
+	levelInfoText1 = "Benchmark: C.U.B.-"
+	levelInfoText2 = " ::: Progress: "
+)
+
 // infos on tiles
 var (
 	tilesImage *ebiten.Image

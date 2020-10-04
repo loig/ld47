@@ -110,6 +110,16 @@ func (g *game) Draw(screen *ebiten.Image) {
 				screen.DrawImage(menuMoveImages[g.loop.moves[id]], op)
 			}
 		}
+
+		// display info
+		s := fmt.Sprint(levelInfoText1, cubNum-1, levelInfoText2)
+		if g.state == inLevel {
+			s = fmt.Sprint(s, g.level.number-1)
+		} else {
+			s = fmt.Sprint(s, g.level.number)
+		}
+		s = fmt.Sprint(s, "/", totalNumLevel)
+		text.Draw(screen, s, displayFont, 7, 268, color.RGBA{45, 47, 74, 255})
 	}
 
 	if g.state == intro || g.state == gameWon ||

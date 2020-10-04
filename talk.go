@@ -27,14 +27,14 @@ const initCubNum = 3
 
 var cubNum = initCubNum
 
-const speaker2BaseName = "C.U.B-"
+const speaker2BaseName = "C.U.B.-"
 
 var speaker2 string
 
 var talks = [][]sentence{
 	[]sentence{
 		sentence{&speaker1, nil},
-		sentence{&speaker1, []string{"You are a freshly generated C.U.B:", "Cybernetic Unit Benchmark."}},
+		sentence{&speaker1, []string{"You are a freshly generated C.U.B.:", "Cybernetic Unit Benchmark."}},
 		sentence{&speaker1, []string{"Hopefully you will perform better", "than your predecessors."}},
 		sentence{&speaker2, []string{"..."}},
 		sentence{&speaker1, []string{"You do not look very loquacious."}},
