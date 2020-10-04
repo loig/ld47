@@ -38,6 +38,7 @@ const (
 	moveSound
 	dashSound
 	missMoveSound
+	resetSound
 )
 
 // stop the current non-overlaying sound
@@ -66,6 +67,8 @@ func (g *game) playSound(sound int, overlaying bool) {
 		soundBytes = talkSoundBytes
 	case missMoveSound:
 		soundBytes = missMoveSoundBytes
+	case resetSound:
+		soundBytes = resetSoundBytes
 	}
 	if overlaying {
 		soundPlayer, error := audio.NewPlayerFromBytes(g.audio.audioContext, soundBytes)
@@ -157,6 +160,19 @@ func (g *game) initAudio() {
 		log.Panic("Audio problem:", error)
 	}
 	missMoveSoundBytes, error = ioutil.ReadAll(sound)
+	if error != nil {
+		log.Panic("Audio problem:", error)
+	}
+
+	soundFile, error = ebitenutil.OpenFile("sounds/reset.mp3")
+	if error != nil {
+		log.Panic("Audio problem:", error)
+	}
+	sound, error = mp3.Decode(g.audio.audioContext, soundFile)
+	if error != nil {
+		log.Panic("Audio problem:", error)
+	}
+	resetSoundBytes, error = ioutil.ReadAll(sound)
 	if error != nil {
 		log.Panic("Audio problem:", error)
 	}

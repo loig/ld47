@@ -115,3 +115,4 @@ var dashSoundBytes []byte
 var talkSoundBytes []byte
 var endLevelSoundBytes []byte
 var missMoveSoundBytes []byte
+var resetSoundBytes []byte

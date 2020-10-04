@@ -40,6 +40,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 		} else {
 			if inpututil.IsKeyJustPressed(ebiten.KeyBackspace) {
 				g.resetLevel()
+				g.playSound(resetSound, true)
 			}
 			if !g.loop.running {
 				move := noMove
