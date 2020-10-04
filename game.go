@@ -33,6 +33,7 @@ const (
 	levelWon
 	intro
 	gameWon
+	titlescreen
 )
 
 // game initialization
@@ -40,7 +41,7 @@ func initGame() *game {
 	g := &game{}
 	g.initLevel("level0")
 	g.initTalks()
-	g.updateState(intro)
+	g.updateState(titlescreen)
 	return g
 }
 

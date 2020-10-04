@@ -124,6 +124,11 @@ func (g *game) Update(screen *ebiten.Image) error {
 				}
 			}
 		}
+
+	case titlescreen:
+		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+			g.updateState(intro)
+		}
 	}
 
 	return nil

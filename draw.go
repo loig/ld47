@@ -151,6 +151,13 @@ func (g *game) Draw(screen *ebiten.Image) {
 		}
 	}
 
+	if g.state == titlescreen {
+		op := &ebiten.DrawImageOptions{}
+		screen.DrawImage(titleImage, op)
+		text.Draw(screen, infoText, displayFont, 148, 220, color.RGBA{249, 65, 9, 255})
+		text.Draw(screen, creditText, displayFont, 90, 11, color.RGBA{45, 47, 74, 255})
+	}
+
 	// debug
 	ebitenutil.DebugPrint(screen, fmt.Sprint(ebiten.CurrentTPS(), ", ", ebiten.CurrentFPS()))
 }

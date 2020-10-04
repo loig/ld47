@@ -38,6 +38,15 @@ var stepDuration = 25
 // number of frames between end of level and next level
 var endLevelDuration = 120
 
+// title screen
+var titleImage *ebiten.Image
+
+const (
+	subtitleText = "Stuck in a loop"
+	creditText   = "A game made in 48h for Ludum Dare 47"
+	infoText     = "Press enter"
+)
+
 // infos on tiles
 var (
 	tilesImage *ebiten.Image

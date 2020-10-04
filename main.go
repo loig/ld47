@@ -29,7 +29,13 @@ import (
 )
 
 func init() {
-	img, _, error := ebitenutil.NewImageFromFile("images/tiles.png", ebiten.FilterDefault)
+	img, _, error := ebitenutil.NewImageFromFile("images/title.png", ebiten.FilterDefault)
+	if error != nil {
+		log.Panic(error)
+	}
+	titleImage = img
+
+	img, _, error = ebitenutil.NewImageFromFile("images/tiles.png", ebiten.FilterDefault)
 	if error != nil {
 		log.Panic(error)
 	}
