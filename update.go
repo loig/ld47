@@ -33,7 +33,8 @@ func (g *game) Update(screen *ebiten.Image) error {
 		if (g.level.number == 1 && g.talk.nextTalk == 2) ||
 			(g.level.number == 1 && g.talk.nextTalk == 3 && g.loop.running) ||
 			(g.level.number == 2 && g.talk.nextTalk == 4) ||
-			(g.level.number == 10 && g.talk.nextTalk == 5) {
+			(g.level.number == 10 && g.talk.nextTalk == 5) ||
+			(g.level.number == 16 && g.talk.nextTalk == 6) {
 			if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 				g.stopSound()
 				g.updateTalks()
@@ -67,8 +68,11 @@ func (g *game) Update(screen *ebiten.Image) error {
 							move = dashUp
 						}
 					}
-					g.movePlayer(move)
+					reset := g.movePlayer(move)
 					g.addToLoop(move)
+					if reset {
+						g.initLoop()
+					}
 				}
 			} else {
 				if !(g.level.number == 1 && g.talk.nextTalk == 3) {
@@ -103,7 +107,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 				g.playSound(talkSound, false)
 			} else {
 				g.initLevel(g.level.nextLevel)
-				if g.level.number == 2 || g.level.number == 10 {
+				if g.level.number == 2 || g.level.number == 10 || g.level.number == 16 {
 					g.playSound(talkSound, false)
 				}
 			}

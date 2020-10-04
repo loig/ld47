@@ -133,7 +133,8 @@ func (g *game) Draw(screen *ebiten.Image) {
 		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 2) ||
 		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 3 && g.loop.running) ||
 		(g.state == inLevel && g.level.number == 2 && g.talk.nextTalk == 4) ||
-		(g.state == inLevel && g.level.number == 10 && g.talk.nextTalk == 5) {
+		(g.state == inLevel && g.level.number == 10 && g.talk.nextTalk == 5) ||
+		(g.state == inLevel && g.level.number == 16 && g.talk.nextTalk == 6) {
 		textyPos := 16
 		dy := tileSize/2 - 2
 		dx := tileSize - 3

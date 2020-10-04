@@ -46,6 +46,7 @@ const (
 	floor int = iota
 	wall
 	box
+	resetFloor
 	nothing
 )
 
@@ -182,6 +183,8 @@ func getLevelLine(line string, width, height int, lineNum int) (levelLine []tile
 			goalx = column
 		case 'b':
 			currentField = getBoxTile(lineNum+lineOffset, column+colOffset)
+		case 'r':
+			currentField = getResetTile(lineNum+lineOffset, column+colOffset)
 		default:
 			log.Panic("Cannot read level: unrecognized character in field description: ", line[column])
 		}

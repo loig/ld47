@@ -42,3 +42,11 @@ func getBoxTile(a, b int) tile {
 	}
 	return boxTileB
 }
+
+// get a reset tile given some coordinates
+func getResetTile(a, b int) tile {
+	if (a+b)%2 == 0 {
+		return resetTileA
+	}
+	return resetTileB
+}

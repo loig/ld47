@@ -68,6 +68,8 @@ var floorTileB = tile{kind: floor}
 var boxTileA = tile{kind: box}
 var boxTileB = tile{kind: box}
 var nothingTile = tile{kind: nothing}
+var resetTileA = tile{kind: resetFloor}
+var resetTileB = tile{kind: resetFloor}
 
 // Over the floor objects
 var goalImage *ebiten.Image

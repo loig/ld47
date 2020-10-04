@@ -54,6 +54,9 @@ var talks = [][]sentence{
 		sentence{&speaker1, []string{"Do you see this new element on the", "field? This is a box. You can push", "it if you do not dash. Press enter."}},
 	},
 	[]sentence{
+		sentence{&speaker1, []string{"Do you see this new element on the", "field? If you stop on it it will", "free your move memory. Press enter."}},
+	},
+	[]sentence{
 		sentence{&speaker1, []string{"Wow, you did it. Impressive."}},
 		sentence{&speaker1, []string{"You were maybe even faster than me."}},
 		sentence{&speaker2, []string{"..."}},

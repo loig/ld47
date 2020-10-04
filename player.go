@@ -60,7 +60,7 @@ func (g *game) updatePlayerAnimation() {
 }
 
 // move the player if possible
-func (g *game) movePlayer(move int) {
+func (g *game) movePlayer(move int) (needLoopReset bool) {
 	dx, dy := 0, 0
 	switch move {
 	case right, dashRight:
@@ -77,17 +77,17 @@ func (g *game) movePlayer(move int) {
 	if newx < 0 || newx >= g.level.width ||
 		newy < 0 || newy >= g.level.height {
 		g.playSound(missMoveSound, true)
-		return
+		return false
 	}
 	if g.level.field[newy][newx].kind == wall {
 		g.playSound(missMoveSound, true)
-		return
+		return false
 	}
 	if move == dashRight || move == dashDown ||
 		move == dashLeft || move == dashUp {
 		if g.level.field[newy][newx].kind == box {
 			g.playSound(missMoveSound, true)
-			return
+			return false
 		}
 		for newx+dx >= 0 && newx+dx < g.level.width &&
 			newy+dy >= 0 && newy+dy < g.level.height &&
@@ -103,20 +103,25 @@ func (g *game) movePlayer(move int) {
 				newx+dx >= g.level.width ||
 				newy+dy >= g.level.height {
 				g.playSound(missMoveSound, true)
-				return
+				return false
 			}
 			if g.level.field[newy+dy][newx+dx].kind == wall ||
 				g.level.field[newy+dy][newx+dx].kind == box {
 				g.playSound(missMoveSound, true)
-				return
+				return false
 			}
 			colOffset := ((tilex - menux) - g.level.width) / 2
 			lineOffset := (tiley - g.level.height) / 2
-			g.level.field[newy][newx] = getFloorTile(newy+lineOffset, newx+colOffset)
+			if g.level.originalfield[newy][newx].kind == resetFloor {
+				g.level.field[newy][newx] = getResetTile(newy+lineOffset, newx+colOffset)
+			} else {
+				g.level.field[newy][newx] = getFloorTile(newy+lineOffset, newx+colOffset)
+			}
 			g.level.field[newy+dy][newx+dx] = getBoxTile(newy+dy+lineOffset, newx+dx+colOffset)
 		}
 		g.playSound(moveSound, true)
 	}
 	g.player.x = newx
 	g.player.y = newy
+	return g.level.field[newy][newx].kind == resetFloor
 }

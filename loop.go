@@ -70,6 +70,9 @@ func (g *game) addToLoop(move int) {
 // execute next move in the loop
 func (g *game) runLoop() {
 	g.loop.currentMoveID = g.loop.nextMoveID
-	g.movePlayer(g.loop.moves[g.loop.nextMoveID])
+	reset := g.movePlayer(g.loop.moves[g.loop.nextMoveID])
 	g.loop.nextMoveID = (g.loop.nextMoveID + 1) % g.loop.length
+	if reset {
+		g.initLoop()
+	}
 }
