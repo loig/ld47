@@ -49,8 +49,9 @@ func init() {
 	boxTileA.image = tilesImage.SubImage(image.Rect(32, 24, 48, 48)).(*ebiten.Image)
 	boxTileB.image = tilesImage.SubImage(image.Rect(48, 24, 64, 48)).(*ebiten.Image)
 
-	// init goal image
+	// init goal images
 	goalImage = tilesImage.SubImage(image.Rect(48, 0, 64, 24)).(*ebiten.Image)
+	goalBoxImage = tilesImage.SubImage(image.Rect(0, 240, 16, 264)).(*ebiten.Image)
 
 	// init player images
 	playerImages = make([]*ebiten.Image, numPlayerImages)

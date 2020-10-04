@@ -27,14 +27,14 @@ const initCubNum = 3
 
 var cubNum = initCubNum
 
-const speaker2BaseName = "C.U.B.-"
+const speaker2BaseName = "C.U.B Mk."
 
 var speaker2 string
 
 var talks = [][]sentence{
 	[]sentence{
 		sentence{&speaker1, nil},
-		sentence{&speaker1, []string{"You are a freshly generated C.U.B.:", "Cybernetic Unit Benchmark."}},
+		sentence{&speaker1, []string{"You are a freshly generated C.U.B:", "Cybernetic Unit Benchmark."}},
 		sentence{&speaker1, []string{"Hopefully you will perform better", "than your predecessors."}},
 		sentence{&speaker2, []string{"..."}},
 		sentence{&speaker1, []string{"You do not look very loquacious."}},
@@ -51,6 +51,9 @@ var talks = [][]sentence{
 		sentence{&speaker1, []string{"You can use space combined with", "some arrow key to dash.", "Press enter when you are ready."}},
 	},
 	[]sentence{
+		sentence{&speaker1, []string{"Do you see this new element on the", "field? This is a box. You can push", "it if you do not dash. Press enter."}},
+	},
+	[]sentence{
 		sentence{&speaker1, []string{"Wow, you did it. Impressive."}},
 		sentence{&speaker1, []string{"You were maybe even faster than me."}},
 		sentence{&speaker2, []string{"..."}},
@@ -58,6 +61,7 @@ var talks = [][]sentence{
 		sentence{&speaker2, []string{"Wait... what!?"}},
 		sentence{&speaker1, []string{"It's your turn to handle it now."}},
 		sentence{&speaker2, []string{"Ok, then."}},
+		sentence{&speaker1, []string{"One last time: press enter."}},
 	},
 }
 
@@ -80,7 +84,7 @@ func (g *game) initTalks() {
 		speaker1 = speaker2
 	}
 	speaker2 = speaker2BaseName + strconv.Itoa(cubNum)
-	talks[0][0].text = []string{"Welcome to life C.U.B-" + strconv.Itoa(cubNum) + "!"}
+	talks[0][0].text = []string{"Welcome to life " + speaker2BaseName + strconv.Itoa(cubNum) + "!"}
 	g.talk = talk{
 		dialog:    talks[0],
 		talkState: 1,

@@ -51,7 +51,11 @@ func (g *game) Draw(screen *ebiten.Image) {
 				screen.DrawImage(g.level.field[y][x].image, op)
 				if x == g.level.goalx && y == g.level.goaly {
 					// display the goal
-					screen.DrawImage(goalImage, op)
+					if g.level.field[y][x].kind == box {
+						screen.DrawImage(goalBoxImage, op)
+					} else {
+						screen.DrawImage(goalImage, op)
+					}
 				}
 				if x == g.player.x && y == g.player.y {
 					// display the player
@@ -128,7 +132,8 @@ func (g *game) Draw(screen *ebiten.Image) {
 	if g.state == intro || g.state == gameWon ||
 		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 2) ||
 		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 3 && g.loop.running) ||
-		(g.state == inLevel && g.level.number == 2 && g.talk.nextTalk == 4) {
+		(g.state == inLevel && g.level.number == 2 && g.talk.nextTalk == 4) ||
+		(g.state == inLevel && g.level.number == 10 && g.talk.nextTalk == 5) {
 		textyPos := 16
 		dy := tileSize/2 - 2
 		dx := tileSize - 3

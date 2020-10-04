@@ -34,7 +34,7 @@ const (
 )
 
 // duration of a loop step in frames
-var stepDuration = 25
+var stepDuration = 20
 
 // number of frames between end of level and next level
 var endLevelDuration = 120
@@ -51,8 +51,8 @@ const (
 // in level info
 const (
 	totalNumLevel  = 10
-	levelInfoText1 = "Benchmark: C.U.B.-"
-	levelInfoText2 = " ::: Progress: "
+	levelInfoText1 = "Benchmark: " + speaker2BaseName
+	levelInfoText2 = " - Progress: "
 )
 
 // infos on tiles
@@ -71,6 +71,7 @@ var nothingTile = tile{kind: nothing}
 
 // Over the floor objects
 var goalImage *ebiten.Image
+var goalBoxImage *ebiten.Image
 
 // infos on player
 const (

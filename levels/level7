@@ -1,8 +1,8 @@
 width=10
 height=8
 loop=7
-next=done
-.###..####
+next=level8
+.###..###.
 .#.####g##
 .#.......#
 .#.#######
