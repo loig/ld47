@@ -1,11 +1,12 @@
 width=7
-height=7
-loop=4
+height=8
+loop=3
 next=level13
 ####...
 #s.####
 #bb.b.#
 #.b..b#
 #b...##
-#.b.g#.
-######.
+#.b...#
+####g##
+...###.
