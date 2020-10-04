@@ -74,5 +74,6 @@ func (g *game) runLoop() {
 	g.loop.nextMoveID = (g.loop.nextMoveID + 1) % g.loop.length
 	if reset {
 		g.initLoop()
+		g.playSound(resetSound, true)
 	}
 }

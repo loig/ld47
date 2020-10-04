@@ -72,6 +72,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 					g.addToLoop(move)
 					if reset {
 						g.initLoop()
+						g.playSound(resetSound, true)
 					}
 				}
 			} else {
