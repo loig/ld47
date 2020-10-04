@@ -25,6 +25,7 @@ type game struct {
 	loop   loop
 	talk   talk
 	frame  int
+	audio  audioManager
 }
 
 // list of possible game states
@@ -39,6 +40,7 @@ const (
 // game initialization
 func initGame() *game {
 	g := &game{}
+	g.initAudio()
 	g.initLevel("level0")
 	g.initTalks()
 	g.updateState(titlescreen)

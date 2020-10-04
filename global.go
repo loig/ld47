@@ -108,3 +108,10 @@ var menuMoveImages []*ebiten.Image
 var displayFont font.Face
 
 const talkFrames = 180
+
+// sounds
+var moveSoundBytes []byte
+var dashSoundBytes []byte
+var talkSoundBytes []byte
+var endLevelSoundBytes []byte
+var missMoveSoundBytes []byte

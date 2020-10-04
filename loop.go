@@ -61,6 +61,9 @@ func (g *game) addToLoop(move int) {
 		g.loop.currentMoveID = len(g.loop.moves) - 1
 		g.loop.nextMoveID = 0
 		g.frame = 0
+		if g.level.number == 1 && g.talk.nextTalk == 3 {
+			g.playSound(talkSound, false)
+		}
 	}
 }
 

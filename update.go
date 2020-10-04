@@ -34,6 +34,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 			(g.level.number == 1 && g.talk.nextTalk == 3 && g.loop.running) ||
 			(g.level.number == 2 && g.talk.nextTalk == 4) {
 			if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+				g.stopSound()
 				g.updateTalks()
 			}
 		} else {
@@ -78,6 +79,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 		}
 		if g.levelFinished() {
 			g.updateState(levelWon)
+			g.playSound(endLevelSound, false)
 			g.resetPlayerAnimation()
 		}
 
@@ -95,8 +97,12 @@ func (g *game) Update(screen *ebiten.Image) error {
 		if changeLevel {
 			if g.level.nextLevel == "done" {
 				g.updateState(gameWon)
+				g.playSound(talkSound, false)
 			} else {
 				g.initLevel(g.level.nextLevel)
+				if g.level.number == 2 {
+					g.playSound(talkSound, false)
+				}
 			}
 		}
 
@@ -112,6 +118,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 					g.updateTalks()
 					g.updateState(inLevel)
 				}
+				g.playSound(talkSound, false)
 			} else {
 				g.updateCurrentTalk()
 				g.frame = 0
@@ -128,6 +135,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 	case titlescreen:
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			g.updateState(intro)
+			g.playSound(talkSound, false)
 		}
 	}
 

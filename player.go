@@ -76,9 +76,11 @@ func (g *game) movePlayer(move int) {
 	newy := g.player.y + dy
 	if newx < 0 || newx >= g.level.width ||
 		newy < 0 || newy >= g.level.height {
+		g.playSound(missMoveSound, true)
 		return
 	}
 	if g.level.field[newy][newx].kind == wall {
+		g.playSound(missMoveSound, true)
 		return
 	}
 	if move == dashRight || move == dashDown ||
@@ -89,6 +91,9 @@ func (g *game) movePlayer(move int) {
 			newx += dx
 			newy += dy
 		}
+		g.playSound(dashSound, true)
+	} else {
+		g.playSound(moveSound, true)
 	}
 	g.player.x = newx
 	g.player.y = newy

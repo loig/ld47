@@ -10,8 +10,10 @@ github.com/hajimehoshi/bitmapfont v1.3.0/go.mod h1:/Qb7yVjHYNUV4JdqNkPs6BSZwLjKq
 github.com/hajimehoshi/ebiten v1.12.0 h1:o1zlfI9Xctzm1QlSdZfxmWRRfRb64AKsafXgRq87oEA=
 github.com/hajimehoshi/ebiten v1.12.0/go.mod h1:0G/t1zdc19XZSPb9YggXN940uglPa6acoqD0+/vy2Qg=
 github.com/hajimehoshi/file2byteslice v0.0.0-20200812174855-0e5e8a80490e/go.mod h1:CqqAHp7Dk/AqQiwuhV1yT2334qbA/tFWQW0MD2dGqUE=
+github.com/hajimehoshi/go-mp3 v0.3.1 h1:pn/SKU1+/rfK8KaZXdGEC2G/KCB2aLRjbTCrwKcokao=
 github.com/hajimehoshi/go-mp3 v0.3.1/go.mod h1:qMJj/CSDxx6CGHiZeCgbiq2DSUkbK0UbtXShQcnfyMM=
 github.com/hajimehoshi/oto v0.6.1/go.mod h1:0QXGEkbuJRohbJaxr7ZQSxnju7hEhseiPx2hrh6raOI=
+github.com/hajimehoshi/oto v0.6.5-0.20200917193348-57f376f2c835 h1:FTEMMDZMtWih3iyGYpACeIrk4zClxwPPFYky6jgBpkc=
 github.com/hajimehoshi/oto v0.6.5-0.20200917193348-57f376f2c835/go.mod h1:0QXGEkbuJRohbJaxr7ZQSxnju7hEhseiPx2hrh6raOI=
 github.com/hajimehoshi/wasmserve v0.0.0-20200921065616-c95bb0de031e h1:NrmopPQTXcpEsajEa9E8cQTKUEBgWZ1cF0FmFM3Vfcg=
 github.com/hajimehoshi/wasmserve v0.0.0-20200921065616-c95bb0de031e/go.mod h1:DI8IeyYdAkNS/K9JvLFBab7cmOkvoLCvMS9U8hLP2tw=
