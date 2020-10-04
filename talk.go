@@ -104,6 +104,8 @@ func (g *game) updateCurrentTalk() {
 	if (g.talk.dialog[g.talk.talkState].speaker == &speaker1) ||
 		(g.talk.nextTalk >= len(talks) && g.talk.talkState >= 4) {
 		g.playSound(talkSound, false)
+	} else {
+		g.stopSound()
 	}
 	g.talk.talkState++
 	if cubNum == initCubNum+1 &&

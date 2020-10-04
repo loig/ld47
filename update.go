@@ -88,6 +88,7 @@ func (g *game) Update(screen *ebiten.Image) error {
 		changeLevel := false
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			changeLevel = true
+			g.stopSound()
 		} else {
 			if g.frame < endLevelDuration {
 				g.frame++
