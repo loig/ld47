@@ -32,6 +32,7 @@ const (
 	inLevel int = iota
 	levelWon
 	intro
+	gameWon
 )
 
 // game initialization

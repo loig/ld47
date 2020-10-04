@@ -112,7 +112,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 		}
 	}
 
-	if g.state == intro ||
+	if g.state == intro || g.state == gameWon ||
 		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 2) ||
 		(g.state == inLevel && g.level.number == 1 && g.talk.nextTalk == 3 && g.loop.running) ||
 		(g.state == inLevel && g.level.number == 2 && g.talk.nextTalk == 4) {

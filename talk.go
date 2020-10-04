@@ -18,7 +18,6 @@ along with this program.  If not, see https://www.gnu.org/licenses/
 package main
 
 import (
-	"log"
 	"strconv"
 )
 
@@ -35,8 +34,8 @@ var speaker2 string
 var talks = [][]sentence{
 	[]sentence{
 		sentence{&speaker1, nil},
-		sentence{&speaker2, []string{"..."}},
-		sentence{&speaker1, []string{"You are a freshly generated Cyber-", "netic Unit Benchmark. Hopefully you", "will perform better than your pre-", "decessors."}},
+		sentence{&speaker1, []string{"You are a freshly generated C.U.B:", "Cybernetic Unit Benchmark."}},
+		sentence{&speaker1, []string{"Hopefully you will perform better", "than your predecessors."}},
 		sentence{&speaker2, []string{"..."}},
 		sentence{&speaker1, []string{"You do not look very loquacious."}},
 		sentence{&speaker2, []string{"..."}},
@@ -51,7 +50,15 @@ var talks = [][]sentence{
 	[]sentence{
 		sentence{&speaker1, []string{"You can use space combined with", "some arrow key to dash.", "Press enter when you are ready."}},
 	},
-	[]sentence{},
+	[]sentence{
+		sentence{&speaker1, []string{"Wow, you did it. Impressive."}},
+		sentence{&speaker1, []string{"You were maybe even faster than me."}},
+		sentence{&speaker2, []string{"..."}},
+		sentence{&speaker2, []string{"..."}},
+		sentence{&speaker2, []string{"Wait... what!?"}},
+		sentence{&speaker1, []string{"It's your turn to handle it now."}},
+		sentence{&speaker2, []string{"Ok, then."}},
+	},
 }
 
 // type for describing talk
@@ -84,12 +91,21 @@ func (g *game) initTalks() {
 
 // go to next talk
 func (g *game) updateTalks() {
-	log.Print("updateTalks: ", g.talk.nextTalk)
 	nextTalk := g.talk.nextTalk
 	g.talk = talk{
 		dialog:    talks[nextTalk],
 		talkState: 1,
-		nextTalk:  (nextTalk + 1) % len(talks),
+		nextTalk:  nextTalk + 1,
+	}
+}
+
+// update the current talk state
+func (g *game) updateCurrentTalk() {
+	g.talk.talkState++
+	if cubNum == initCubNum+1 &&
+		g.talk.nextTalk >= len(talks) &&
+		g.talk.talkState == 6 {
+		speaker1 = speaker2BaseName + strconv.Itoa(initCubNum-1)
 	}
 }
 

@@ -60,6 +60,7 @@ func (g *game) addToLoop(move int) {
 		g.loop.running = true
 		g.loop.currentMoveID = len(g.loop.moves) - 1
 		g.loop.nextMoveID = 0
+		g.frame = 0
 	}
 }
 

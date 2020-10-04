@@ -69,7 +69,8 @@ func (g *game) Update(screen *ebiten.Image) error {
 				}
 			} else {
 				if !(g.level.number == 1 && g.talk.nextTalk == 3) {
-					if g.frame == 0 {
+					if g.frame == 0 || inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+						g.frame = 0
 						g.runLoop()
 					}
 				}
@@ -92,33 +93,34 @@ func (g *game) Update(screen *ebiten.Image) error {
 			}
 		}
 		if changeLevel {
-			newLoop := false
 			if g.level.nextLevel == "done" {
-				g.level.nextLevel = "level0"
-				g.level.number = 0
-				newLoop = true
-			}
-			g.initLevel(g.level.nextLevel)
-			if newLoop {
-				g.initTalks()
-				g.updateState(intro)
+				g.updateState(gameWon)
+			} else {
+				g.initLevel(g.level.nextLevel)
 			}
 		}
 
-	case intro:
+	case intro, gameWon:
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
 			if g.talk.talkState == len(g.talk.dialog) {
-				g.updateTalks()
-				g.updateState(inLevel)
+				if g.state == gameWon {
+					g.level.number = 0
+					g.initLevel("level0")
+					g.initTalks()
+					g.updateState(intro)
+				} else {
+					g.updateTalks()
+					g.updateState(inLevel)
+				}
 			} else {
-				g.talk.talkState++
+				g.updateCurrentTalk()
 				g.frame = 0
 			}
 		} else {
 			g.frame = (g.frame + 1) % talkFrames
 			if g.frame == 0 {
 				if g.talk.talkState < len(g.talk.dialog) {
-					g.talk.talkState++
+					g.updateCurrentTalk()
 				}
 			}
 		}
