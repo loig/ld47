@@ -7,6 +7,10 @@
 ld47
 web
 web/*
+linux
+linux/*
+windows
+windows/*
 
 # Test binary, built with `go test -c`
 *.test
