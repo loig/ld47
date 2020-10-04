@@ -19,6 +19,7 @@ package main
 
 import (
 	"github.com/hajimehoshi/ebiten"
+	"github.com/hajimehoshi/ebiten/audio"
 	"golang.org/x/image/font"
 )
 
@@ -116,3 +117,4 @@ var talkSoundBytes []byte
 var endLevelSoundBytes []byte
 var missMoveSoundBytes []byte
 var resetSoundBytes []byte
+var infiniteMusic *audio.InfiniteLoop

@@ -135,7 +135,9 @@ func (g *game) Update(screen *ebiten.Image) error {
 		}
 
 	case titlescreen:
+		g.updateMusic()
 		if inpututil.IsKeyJustPressed(ebiten.KeyEnter) {
+			g.stopMusic()
 			g.updateState(intro)
 			g.playSound(talkSound, false)
 		}

@@ -20,6 +20,8 @@ package main
 import (
 	"io/ioutil"
 	"log"
+	"math"
+	"time"
 
 	"github.com/hajimehoshi/ebiten/audio"
 	"github.com/hajimehoshi/ebiten/audio/mp3"
@@ -40,6 +42,34 @@ const (
 	missMoveSound
 	resetSound
 )
+
+// loop the music
+func (g *game) updateMusic() {
+	if g.audio.musicPlayer != nil {
+		if !g.audio.musicPlayer.IsPlaying() {
+			g.audio.musicPlayer.Rewind()
+			g.audio.musicPlayer.Play()
+		}
+	} else {
+		var error error
+		g.audio.musicPlayer, error = audio.NewPlayer(g.audio.audioContext, infiniteMusic)
+		if error != nil {
+			log.Panic("Audio problem:", error)
+		}
+    g.audio.musicPlayer.Play()
+	}
+
+}
+
+// stop the music
+func (g *game) stopMusic() {
+	if g.audio.musicPlayer != nil && g.audio.musicPlayer.IsPlaying() {
+		error := g.audio.musicPlayer.Close()
+		if error != nil {
+			log.Panic("Sound problem:", error)
+		}
+	}
+}
 
 // stop the current non-overlaying sound
 func (g *game) stopSound() {
@@ -99,11 +129,26 @@ func (g *game) initAudio() {
 		log.Panic("Audio problem:", error)
 	}
 
-	soundFile, error := ebitenutil.OpenFile("sounds/dashmove.mp3")
+	// music
+	soundFile, error := ebitenutil.OpenFile("sounds/introsong.mp3")
 	if error != nil {
 		log.Panic("Audio problem:", error)
 	}
 	sound, error := mp3.Decode(g.audio.audioContext, soundFile)
+	if error != nil {
+		log.Panic("Audio problem:", error)
+	}
+	tduration, _ := time.ParseDuration("30s")
+	duration := tduration.Seconds()
+	bytes := int64(math.Round(duration * 4 * float64(44100)))
+	infiniteMusic = audio.NewInfiniteLoop(sound, bytes)
+
+	// sounds
+	soundFile, error = ebitenutil.OpenFile("sounds/dashmove.mp3")
+	if error != nil {
+		log.Panic("Audio problem:", error)
+	}
+	sound, error = mp3.Decode(g.audio.audioContext, soundFile)
 	if error != nil {
 		log.Panic("Audio problem:", error)
 	}
