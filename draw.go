@@ -125,7 +125,7 @@ func (g *game) Draw(screen *ebiten.Image) {
 		text.Draw(screen, s, displayFont, 9, 268, color.RGBA{45, 47, 74, 255})
 
 		if g.state == inLevel {
-			text.Draw(screen, "Backslash to restart level", displayFont, 9, 10, color.RGBA{45, 47, 74, 255})
+			text.Draw(screen, "Backspace to restart level", displayFont, 9, 10, color.RGBA{45, 47, 74, 255})
 		}
 	}
 
