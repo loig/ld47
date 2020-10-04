@@ -88,5 +88,7 @@ var selectedRightDown *ebiten.Image
 
 var menuMoveImages []*ebiten.Image
 
-// font
+// talking
 var displayFont font.Face
+
+const talkFrames = 180

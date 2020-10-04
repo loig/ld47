@@ -42,10 +42,10 @@ var talks = [][]sentence{
 		sentence{&speaker1, []string{"I guess we go on then. Press enter."}},
 	},
 	[]sentence{
-		sentence{&speaker1, []string{"Just use the arrow keys to move and", "reach the orange circled tile.", "You can use backspace to restart.", "Press enter when you are ready."}},
+		sentence{&speaker1, []string{"Use the arrow keys to reach the", "orange-bordered tile. Your moves", "are recorded on the right. In case", "of emergency, backspace will let", "you restart. Press enter now."}},
 	},
 	[]sentence{
-		sentence{&speaker1, []string{"Oups! Did I forgot to mention that", "you have a move limit after wich", "you will loop forever? Well, sorry.", "Now press enter and enjoy looping."}},
+		sentence{&speaker1, []string{"Oups! Did I forgot to mention that", "you have a move memory limit after", "which you will loop on the recorded", "move sequence forever? Well, sorry.", "Now press enter and enjoy looping."}},
 	},
 	[]sentence{
 		sentence{&speaker1, []string{"You can use space combined with", "some arrow key to dash.", "Press enter when you are ready."}},
@@ -108,5 +108,3 @@ func (g *game) updateCurrentTalk() {
 		speaker1 = speaker2BaseName + strconv.Itoa(initCubNum-1)
 	}
 }
-
-const talkFrames = 120
